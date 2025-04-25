@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи на неделю</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-center bg-gray-100 min-h-screen py-10 px-4">
+
+    <div class="w-full max-w-6xl bg-white shadow-xl rounded-xl p-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">📅 Задачи на неделю</h1>
+
+        <h2 class="text-xl font-semibold text-center text-gray-700 mb-8">📝 Список задач по дням</h2>
+
+        <div class="flex flex-wrap gap-6 justify-center">
+            {% for day, tasks in tasks_by_day %}
+                <div class="w-64 bg-white border border-gray-200 rounded-lg shadow-sm p-4 hover:shadow-md transition">
+                    <h3 class="text-lg font-semibold text-blue-600 mb-3 text-center">{{ day }}</h3>
+                    <ul class="space-y-2 text-sm">
+                        {% if tasks %}
+                            {% for task in tasks %}
+                                <li class="bg-blue-50 p-2 rounded-md">
+                                    <span class="font-medium">{{ task.task_name }}</span><br>
+                                    <span class="text-gray-600 text-xs">{{ task.duration_minutes }} мин, {{ task.start_time }}</span>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="text-gray-400 italic text-center">Нет задач</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-10 text-right text-sm text-gray-700">
+            <p>🕒 Общее занятое время: <span class="font-semibold">{{ total_time }}</span> минут</p>
+            <p>⏳ Свободное время за неделю: <span class="font-semibold">{{ remaining_time }}</span> минут</p>
+            <a href="{% url 'add_task' %}" class="inline-block mt-3 text-blue-600 hover:text-blue-800 font-medium">➕ Добавить задачу</a>
+        </div>
+    </div>
+
+</body>
+</html>
